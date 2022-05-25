@@ -33,7 +33,7 @@ class TokenController {
       expiresIn: process.env.TOKEN_EXPIRATION,
     });
 
-    return res.json({ token, user: { nome: user.nome, id, email } }); // token: { <valor_token> }
+    return res.json({ token, user: { name: user.name, id, email } }); // token: { <valor_token> }
   }
 }
 
