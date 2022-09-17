@@ -1,12 +1,12 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _dotenv = require('dotenv'); var _dotenv2 = _interopRequireDefault(_dotenv);
 
-var _path = require('path');
+var _path = require('path'); var _path2 = _interopRequireDefault(_path);
 
 require('./database');
 
 var _express = require('express'); var _express2 = _interopRequireDefault(_express);
 var _cors = require('cors'); var _cors2 = _interopRequireDefault(_cors);
-// import helmet from 'helmet';
+var _helmet = require('helmet'); var _helmet2 = _interopRequireDefault(_helmet);
 var _expressdelay = require('express-delay'); var _expressdelay2 = _interopRequireDefault(_expressdelay);
 
 var _homeRoutes = require('./routes/homeRoutes'); var _homeRoutes2 = _interopRequireDefault(_homeRoutes);
@@ -15,7 +15,7 @@ var _tokenRoutes = require('./routes/tokenRoutes'); var _tokenRoutes2 = _interop
 var _cardRoutes = require('./routes/cardRoutes'); var _cardRoutes2 = _interopRequireDefault(_cardRoutes);
 var _deckRoutes = require('./routes/deckRoutes'); var _deckRoutes2 = _interopRequireDefault(_deckRoutes);
 
-_dotenv2.default.config();
+_dotenv2.default.config({ path: _path2.default.join(__dirname, '../.env') }); // pm2 needs the env file path
 
 const whiteList = [ // origens permitidas
   // 'http://34.151.230.126',
@@ -42,7 +42,8 @@ class App {
 
   middleware() {
     this.app.use(_cors2.default.call(void 0, corsOptions));
-    // this.app.use(helmet());
+    // this.app.use(helmet()); // real app https
+    this.app.use(_helmet2.default.call(void 0, { contentSecurityPolicy: false })); // dev step with http
     this.app.use(_expressdelay2.default.call(void 0, 2000));
     this.app.use(_express2.default.urlencoded({ extended: true }));
     this.app.use(_express2.default.json());

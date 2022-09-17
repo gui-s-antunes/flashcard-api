@@ -1,12 +1,12 @@
 import dotenv from 'dotenv';
 
-import { resolve } from 'path';
+import path, { resolve } from 'path';
 
 import './database';
 
 import express from 'express';
 import cors from 'cors';
-// import helmet from 'helmet';
+import helmet from 'helmet';
 import delay from 'express-delay';
 
 import homeRoutes from './routes/homeRoutes';
@@ -15,7 +15,7 @@ import tokenRoutes from './routes/tokenRoutes';
 import cardRoutes from './routes/cardRoutes';
 import deckRoutes from './routes/deckRoutes';
 
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, '../.env') }); // pm2 needs the env file path
 
 const whiteList = [ // origens permitidas
   // 'http://34.151.230.126',
@@ -42,7 +42,8 @@ class App {
 
   middleware() {
     this.app.use(cors(corsOptions));
-    // this.app.use(helmet());
+    // this.app.use(helmet()); // real app https
+    this.app.use(helmet({ contentSecurityPolicy: false })); // dev step with http
     this.app.use(delay(2000));
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
