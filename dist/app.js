@@ -19,8 +19,9 @@ _dotenv2.default.config({ path: _path2.default.join(__dirname, '../.env') }); //
 
 const whiteList = [ // origens permitidas
   // 'http://34.151.230.126',
-  'http://localhost:3001',
-  'http://localhost:3000',
+  // 'http://localhost:3001',
+  // 'http://localhost:3000',
+  process.env.WHITELIST,
 ];
 
 const corsOptions = {
