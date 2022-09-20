@@ -19,8 +19,9 @@ dotenv.config({ path: path.join(__dirname, '../.env') }); // pm2 needs the env f
 
 const whiteList = [ // origens permitidas
   // 'http://34.151.230.126',
-  'http://localhost:3001',
-  'http://localhost:3000',
+  // 'http://localhost:3001',
+  // 'http://localhost:3000',
+  process.env.WHITELIST,
 ];
 
 const corsOptions = {
